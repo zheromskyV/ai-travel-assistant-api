@@ -1,5 +1,28 @@
 # IDEATION
 
+## Table of contents
+
+- [IDEATION](#ideation)
+  - [Table of contents](#table-of-contents)
+  - [Develop the idea](#develop-the-idea)
+    - [Core Functionality](#core-functionality)
+    - [Improvements \& Suggestions](#improvements--suggestions)
+    - [Extra Features](#extra-features)
+  - [Solution pipeline](#solution-pipeline)
+    - [Pipeline Overview](#pipeline-overview)
+    - [Detailed Pipeline](#detailed-pipeline)
+    - [Summary Pipeline Flow](#summary-pipeline-flow)
+  - [Questionnaire](#questionnaire)
+  - [Architecture](#architecture)
+    - [High-Level Architecture](#high-level-architecture)
+    - [Design Goals](#design-goals)
+    - [Session Management](#session-management)
+    - [API Endpoints \& Contracts](#api-endpoints--contracts)
+    - [Key Design Considerations](#key-design-considerations)
+    - [Technology Stack](#technology-stack)
+    - [Conclusion](#conclusion)
+
+
 ## Develop the idea
 
 Here’s a developed version of your idea with some improvements and extra features:
@@ -10,7 +33,7 @@ Travel Destination Recommendation:
 - The app will ask users a series of questions (e.g., budget, preferred climate, activities, time of year, travel restrictions, etc.).
 - Based on their responses, the AI provides personalized destination recommendations using OpenAI API for processing user inputs.
 
-### Improvements & Suggestions:
+### Improvements & Suggestions
 
 1. **Dynamic Questioning:** 
 Make the questionnaire adaptive. Based on a user’s answers to initial questions, dynamically refine subsequent questions to get more precise data.
@@ -23,7 +46,7 @@ Create user profiles that categorize travel preferences (adventurer, cultural en
 1. **Natural Language Q&A:**
 Allow users to ask the AI open-ended travel questions like “Where can I go in Europe in December for under $1000?” and get real-time, personalized recommendations.
 
-### Extra Features:
+### Extra Features
 
 1. **Local Experience Suggestions:**
 Beyond just recommending destinations, offer suggestions for local experiences (food tours, landmarks, hidden gems). Integrate data from travel blogs or third-party APIs.
@@ -288,7 +311,7 @@ To design a simple, yet robust RESTful API for your AI travel assistant, we need
 
 Client (Web/Mobile App) ↔ Backend (Node.js REST API) ↔ AI Service (OpenAI API)
 
-#### Components Overview:
+**Components Overview**
 
 1.	Frontend: Web or mobile app to capture user input and display responses.
 2.	Backend: Node.js server responsible for handling API requests, session management, and integrating with the AI service.
