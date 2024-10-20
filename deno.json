@@ -5,7 +5,9 @@
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.0",
-    "openai": "npm:openai@^4.68.1"
+    "openai": "npm:openai@^4.68.1",
+    "@api/": "./src/api/",
+    "@utils/": "./src/utils/"
   },
   "fmt": {
     "include": ["src"],

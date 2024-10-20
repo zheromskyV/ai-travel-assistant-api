@@ -1,21 +1,13 @@
 import { Application } from 'jsr:@oak/oak/application';
-import { Router } from 'jsr:@oak/oak/router';
+import { Router } from '@oak/oak/router';
+import { apiRouter } from '@api/api-router.ts';
 
 if (import.meta.main) {
-  const router = new Router();
-
-  router.get('/', (ctx) => {
-    ctx.response.body = `<!DOCTYPE html>
-    <html>
-      <head><title>Hello oak!</title><head>
-      <body>
-        <h1>Hello oak!</h1>
-      </body>
-    </html>
-  `;
-  });
-
   const app = new Application();
+
+  const router = new Router();
+  router.use('/api', apiRouter.routes());
+
   app.use(router.routes());
   app.use(router.allowedMethods());
 
