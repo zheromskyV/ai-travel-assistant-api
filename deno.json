@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "dev": "deno run --env-file -A src/main.ts",
+    "dev:watch": "deno run --watch --env-file -A src/main.ts"
+  },
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^17.1.0",
+    "openai": "npm:openai@^4.68.1"
+  },
+  "fmt": {
+    "include": ["src"],
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": true
+  }
+}
