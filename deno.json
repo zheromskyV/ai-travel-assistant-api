@@ -1,7 +1,8 @@
 {
   "tasks": {
     "dev": "deno run --env-file -A src/main.ts",
-    "dev:watch": "deno run --watch --env-file -A src/main.ts"
+    "dev:watch": "deno run --watch --env-file -A src/main.ts",
+    "deploy": "deployctl deploy --project=ai-travel-assistant --entrypoint=src/main.ts --prod"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.0",
@@ -10,11 +11,21 @@
     "@utils/": "./src/utils/"
   },
   "fmt": {
-    "include": ["src"],
+    "include": [
+      "src"
+    ],
     "useTabs": false,
     "lineWidth": 100,
     "indentWidth": 2,
     "semiColons": true,
     "singleQuote": true
+  },
+  "deploy": {
+    "project": "980e6f20-2905-489e-921b-33d45c0b83c6",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "src/main.ts"
   }
 }
