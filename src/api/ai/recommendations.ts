@@ -1,7 +1,7 @@
 import type { RouterContext } from '@oak/oak/router';
 import type { GetRecommendationsReq } from './models.ts';
 import { getReqBody } from '@utils/api.ts';
-import { ai } from '@api/ai/openai.ts';
+import { ai } from './ai.ts';
 import { TextEncoderStream } from 'node:stream/web';
 
 const aiRecommendationsAssistant = Deno.env.get('AI_RECOMMENDATIONS')!;
