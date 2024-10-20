@@ -16,6 +16,14 @@ No init thanks to Deno
 
 `deno lint`
 
+`deno lint --fix`
+
 ## Format
 
-`deno format`
+`deno fmt`
+
+`deno fmt --watch`
+
+## Deploy
+
+`deno run deploy`

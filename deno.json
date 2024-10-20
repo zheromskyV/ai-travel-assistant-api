@@ -2,7 +2,7 @@
   "tasks": {
     "dev": "deno run --env-file -A src/main.ts",
     "dev:watch": "deno run --watch --env-file -A src/main.ts",
-    "deploy": "deployctl deploy --project=ai-travel-assistant --entrypoint=src/main.ts --prod"
+    "deploy": "deployctl deploy --project=ai-travel-assistant --entrypoint=src/main.ts"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.0",
