@@ -1,5 +1,7 @@
 # ai-travel-assistant-api
 
+https://ai-travel-assistant.deno.dev
+
 Built using [Deno](https://docs.deno.com/runtime/) runtime.
 
 ## Init
