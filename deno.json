@@ -1,8 +1,8 @@
 {
   "tasks": {
-    "dev": "deno run --env-file -A src/main.ts",
-    "dev:watch": "deno run --watch --env-file -A src/main.ts",
-    "deploy": "deployctl deploy --project=ai-travel-assistant --entrypoint=src/main.ts"
+    "dev": "deno run --env-file -A --unstable-kv src/main.ts",
+    "dev:watch": "deno run --watch --env-file -A --unstable-kv src/main.ts",
+    "deploy": "deployctl deploy --project=ai-travel-assistant --entrypoint=src/main.ts --unstable-kv"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.0",

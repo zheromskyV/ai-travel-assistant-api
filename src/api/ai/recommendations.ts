@@ -3,6 +3,7 @@ import type { GetRecommendationsReq } from './models.ts';
 import { getReqBody } from '@utils/api.ts';
 import { ai } from './ai.ts';
 import { TextEncoderStream } from 'node:stream/web';
+import { SessionKey, setToSession } from '@utils/session.ts';
 
 const aiRecommendationsAssistant = Deno.env.get('AI_RECOMMENDATIONS')!;
 
@@ -10,6 +11,7 @@ export async function getRecommendations(ctx: RouterContext<string>): Promise<vo
   const req = await getReqBody<GetRecommendationsReq>(ctx);
 
   const { id } = await ai.createThread();
+  await setToSession(ctx, SessionKey.Thread, id);
 
   for (const { question, answer } of req.questionnaire) {
     await ai.sendMessage(id, 'assistant', question);
