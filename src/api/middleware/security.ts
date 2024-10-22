@@ -1,6 +1,6 @@
 import type { RouterContext } from '@oak/oak/router';
 
-export async function checkKey(
+export async function securityHandler(
   ctx: RouterContext<string>,
   next: () => Promise<unknown>,
 ): Promise<void> {
