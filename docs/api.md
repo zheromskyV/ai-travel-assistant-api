@@ -4,12 +4,13 @@
   - [`/api`](#api)
     - [`/ai`](#ai)
       - [POST `/recommendations`](#post-recommendations)
+      - [POST `/location-recognition`](#post-location-recognition)
 
 ## `/api`
 
 All `/api` endpoints are **protected** and will return `401` error unless a valid `X-Api-Key` header is provided.
 
-All requests to endpoints under `/api` can provide `streamResponse?: boolean` parameter in the body:
+Most requests to endpoints under `/api` can provide `streamResponse?: boolean` parameter in the body:
 
 - `true` - response will be streamed via [SSE](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 - `false` or omitted - the response will be provided in a standard way
@@ -103,3 +104,21 @@ data:  design
 data:  district
 ```
 </details>
+
+#### POST `/location-recognition`
+
+<div align="right"><font face="monospace">/ai/api/location-recognition</font></div>
+
+**Request:**
+```json
+{
+    "image": "data:image/jpeg;base64,/9j/2wBDAAYEBQYF..."
+}
+```
+
+*`streamResponse` is not supported*
+
+**Response:**
+```json
+This location appears to be Wrocław, Poland. The city is known for its beautiful architecture, including the characteristic red-roofed buildings and the iconic Gothic-style churches. My confidence level is high.
+```
