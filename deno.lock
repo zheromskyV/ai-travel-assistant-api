@@ -207,6 +207,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@oak/commons@1",
       "jsr:@oak/oak@^17.1.0",
       "npm:openai@^4.68.1"
     ]

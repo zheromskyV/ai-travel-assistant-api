@@ -1,6 +1,7 @@
 import { Application } from 'jsr:@oak/oak/application';
 import { Router } from '@oak/oak/router';
 import { apiRouter } from '@api/api-router.ts';
+import { errorHandler } from '@api/middleware/errors.ts';
 
 if (import.meta.main) {
   const app = new Application();
@@ -8,6 +9,7 @@ if (import.meta.main) {
   const router = new Router();
   router.use('/api', apiRouter.routes());
 
+  app.use(errorHandler);
   app.use(router.routes());
   app.use(router.allowedMethods());
 

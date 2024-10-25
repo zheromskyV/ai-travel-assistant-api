@@ -4,6 +4,7 @@ import { getReqBody } from '@utils/api.ts';
 import { ai } from './ai.ts';
 import { TextEncoderStream } from 'node:stream/web';
 import { getFromSession, SessionKey } from '@utils/session.ts';
+import { Status } from '@oak/commons/status';
 
 export async function compareRecommendations(ctx: RouterContext<string>): Promise<void> {
   const req = await getReqBody<GetCompareRecommendationsReq>(ctx);
@@ -11,8 +12,7 @@ export async function compareRecommendations(ctx: RouterContext<string>): Promis
   const id = await getFromSession(ctx, SessionKey.Thread);
 
   if (!id) {
-    ctx.response.status = 400;
-    return;
+    ctx.throw(Status.BadRequest, `[compareRecommendations] No ${SessionKey.Thread} found`);
   }
 
   const chat = ai.createChat(id, Deno.env.get('AI_COMPARE')!);

@@ -1,7 +1,7 @@
-import type { RouterContext } from '@oak/oak/router';
 import { createSession, getSession } from '@utils/session.ts';
+import type { Context } from '@oak/oak/context';
 
-export async function sessionHandler(ctx: RouterContext<string>, next: () => Promise<unknown>) {
+export async function sessionHandler(ctx: Context, next: () => Promise<unknown>) {
   if (!await getSession(ctx)) {
     await createSession(ctx);
   }

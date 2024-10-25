@@ -1,4 +1,4 @@
-import type { RouterContext } from '@oak/oak/router';
+import type { Context } from '@oak/oak/context';
 import { randomUUID } from 'node:crypto';
 
 const kv = await Deno.openKv();
@@ -14,7 +14,7 @@ interface Session extends Partial<Record<SessionKey, string>> {
   id: string;
 }
 
-export async function createSession(ctx: RouterContext<string>): Promise<Session> {
+export async function createSession(ctx: Context): Promise<Session> {
   const sid = randomUUID();
   ctx.state[SID] = sid;
   await ctx.cookies.set(SID, sid);
@@ -25,13 +25,13 @@ export async function createSession(ctx: RouterContext<string>): Promise<Session
   return session;
 }
 
-export async function getSession(ctx: RouterContext<string>): Promise<Session | null> {
+export async function getSession(ctx: Context): Promise<Session | null> {
   const sid = await ctx.cookies.get(SID) || ctx.state[SID];
   return sid ? getSidKV(sid) : null;
 }
 
 export async function getFromSession(
-  ctx: RouterContext<string>,
+  ctx: Context,
   key: SessionKey,
 ): Promise<string | undefined> {
   const session = await getSession(ctx);
@@ -39,7 +39,7 @@ export async function getFromSession(
 }
 
 export async function setToSession(
-  ctx: RouterContext<string>,
+  ctx: Context,
   key: SessionKey,
   value: string,
 ): Promise<void> {

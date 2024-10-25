@@ -1,7 +1,8 @@
-import type { RouterContext } from '@oak/oak/router';
+import type { Context } from '@oak/oak/context';
+import { Status } from '@oak/commons/status';
 
 export async function securityHandler(
-  ctx: RouterContext<string>,
+  ctx: Context,
   next: () => Promise<unknown>,
 ): Promise<void> {
   const key = ctx.request.headers.get('X-Api-Key') ?? '';
@@ -9,6 +10,6 @@ export async function securityHandler(
   if (key === Deno.env.get('X_API_KEY')) {
     await next();
   } else {
-    ctx.response.status = 401;
+    ctx.throw(Status.Forbidden, `[securityHandler] key "${key}" is invalid`);
   }
 }
