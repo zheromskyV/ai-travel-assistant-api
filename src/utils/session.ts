@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 const kv = await Deno.openKv();
 
 const SID = 'sid';
+const EXPIRE_IN = 60 * 60 * 1000; // 1 hour
 
 export const enum SessionKey {
   Thread = 'thread_id',
@@ -19,20 +20,14 @@ export async function createSession(ctx: RouterContext<string>): Promise<Session
   await ctx.cookies.set(SID, sid);
 
   const session = { id: sid };
-  await kv.set([SID, sid], session);
+  await setSidKV(session);
 
   return session;
 }
 
 export async function getSession(ctx: RouterContext<string>): Promise<Session | null> {
   const sid = await ctx.cookies.get(SID) || ctx.state[SID];
-
-  if (sid) {
-    const { value } = await kv.get<Session>([SID, sid]);
-    return value;
-  }
-
-  return null;
+  return sid ? getSidKV(sid) : null;
 }
 
 export async function getFromSession(
@@ -40,7 +35,6 @@ export async function getFromSession(
   key: SessionKey,
 ): Promise<string | undefined> {
   const session = await getSession(ctx);
-
   return session?.[key];
 }
 
@@ -52,6 +46,15 @@ export async function setToSession(
   const session = await getSession(ctx);
 
   if (session) {
-    await kv.set([SID, session.id], { ...session, [key]: value });
+    await setSidKV({ ...session, [key]: value });
   }
+}
+
+async function setSidKV(session: Session) {
+  return await kv.set([SID, session.id], session, { expireIn: EXPIRE_IN });
+}
+
+async function getSidKV(sid: string) {
+  const { value } = await kv.get<Session>([SID, sid]);
+  return value;
 }

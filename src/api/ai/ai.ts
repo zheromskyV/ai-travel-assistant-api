@@ -12,6 +12,10 @@ class AI {
     return this.threads.create();
   }
 
+  public retrieveThread(id: string) {
+    return this.threads.retrieve(id);
+  }
+
   public sendMessage(threadId: string, role: 'user' | 'assistant', content: string) {
     return this.threads.messages.create(threadId, { role, content });
   }

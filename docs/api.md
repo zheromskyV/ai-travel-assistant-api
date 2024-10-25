@@ -4,6 +4,7 @@
   - [`/api`](#api)
     - [`/ai`](#ai)
       - [POST `/recommendations`](#post-recommendations)
+      - [POST `/recommendations/compare`](#post-recommendationscompare)
       - [POST `/location-recognition`](#post-location-recognition)
 
 ## `/api`
@@ -102,6 +103,65 @@ data:  Helsinki
 data: 's
 data:  design
 data:  district
+```
+</details>
+
+#### POST `/recommendations/compare`
+
+<div align="right"><font face="monospace">/ai/api/recommendations/compare</font></div>
+
+**Request:**
+
+Must include `sid` cookie with which `/recommendations` request was run.
+
+```json
+{
+    "streamResponse": false
+}
+```
+
+**Response:**
+```json
+| Destination | Cost       | Weather       | Activities and Attractions                     | Accommodation  | Safety | Culture       |
+|-------------|------------|---------------|------------------------------------------------|-----------------|--------|---------------|
+| Finland     | Moderate   | Cold, snowy   | Helsinki's design scene, Historical sites, Northern Lights in Lapland | Various        | High   | Very High     |
+| Sweden      | Moderate   | Cold, snowy   | Stockholm's museums, Gamla Stan, nearby winter sports in Åre | Various        | High   | Very High     |
+| Norway      | Moderate   | Cold, snowy   | Oslo's museums, Fjord tours, winter sports in Lillehammer | Various        | High   | High          |
+
+### Summary of Criteria:
+
+- **Cost**: All three destinations fall into a moderate price range, making them suitable for a mid-range traveler.
+- **Weather**: Each location offers a cold, snowy climate, perfect for winter enthusiasts.
+- **Activities and Attractions**:
+  - **Finland** focuses on design and unique cultural experiences, along with stunning natural phenomena.
+  - **Sweden** provides a mix of historical and modern attractions, along with access to winter sports.
+  - **Norway** emphasizes impressive natural landscapes, along with rich cultural and historical experiences.
+- **Accommodation**: All destinations offer a variety of accommodation options suitable for various budgets.
+- **Safety**: All three countries are considered safe for travelers.
+- **Culture**: Finland and Sweden provide very high cultural experiences, while Norway offers a high cultural experience focused on maritime history and natural beauty.
+
+This table should assist you in making an informed decision based on your preferences!
+```
+
+<details>
+  <summary><font face="monospace">streamResponse=true</font></summary>
+
+```
+data: |
+data:  Destination
+data:  |
+data:  Cost
+data:       
+data:  |
+data:  Weather
+data:       
+data:  |
+data:  Activities
+data:  and
+data:  Attractions
+data:                     
+data:  |
+data:  Accommodation
 ```
 </details>
 

@@ -1,22 +1,21 @@
 import type { RouterContext } from '@oak/oak/router';
-import type { GetRecommendationsReq } from './models.ts';
+import type { GetCompareRecommendationsReq } from './models.ts';
 import { getReqBody } from '@utils/api.ts';
 import { ai } from './ai.ts';
 import { TextEncoderStream } from 'node:stream/web';
-import { SessionKey, setToSession } from '@utils/session.ts';
+import { getFromSession, SessionKey } from '@utils/session.ts';
 
-export async function getRecommendations(ctx: RouterContext<string>): Promise<void> {
-  const req = await getReqBody<GetRecommendationsReq>(ctx);
+export async function compareRecommendations(ctx: RouterContext<string>): Promise<void> {
+  const req = await getReqBody<GetCompareRecommendationsReq>(ctx);
 
-  const { id } = await ai.createThread();
-  await setToSession(ctx, SessionKey.Thread, id);
+  const id = await getFromSession(ctx, SessionKey.Thread);
 
-  for (const { question, answer } of req.questionnaire) {
-    await ai.sendMessage(id, 'assistant', question);
-    await ai.sendMessage(id, 'user', answer);
+  if (!id) {
+    ctx.response.status = 400;
+    return;
   }
 
-  const chat = ai.createChat(id, Deno.env.get('AI_RECOMMENDATIONS')!);
+  const chat = ai.createChat(id, Deno.env.get('AI_COMPARE')!);
 
   if (req.streamResponse) {
     const sseTarget = await ctx.sendEvents();

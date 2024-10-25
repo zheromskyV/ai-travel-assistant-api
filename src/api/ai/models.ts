@@ -7,6 +7,8 @@ export interface GetRecommendationsReq extends BaseReq {
   }[];
 }
 
+export interface GetCompareRecommendationsReq extends BaseReq {}
+
 export interface GetLocationRecognitionReq {
   image: string; // base64
 }
