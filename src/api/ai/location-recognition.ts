@@ -2,9 +2,19 @@ import type { RouterContext } from '@oak/oak/router';
 import type { GetLocationRecognitionReq } from './models.ts';
 import { getReqBody } from '@utils/api.ts';
 import { ai } from './ai.ts';
+import { Status } from '@oak/commons/status';
 
 export async function recognizeLocation(ctx: RouterContext<string>): Promise<void> {
   const req = await getReqBody<GetLocationRecognitionReq>(ctx);
+  const { image } = req;
+
+  if (!image) {
+    ctx.throw(Status.BadRequest, `[recognizeLocation] "image" is required but not provided`);
+  }
+
+  if (!image.startsWith('data:image/') || !image.includes('base64')) {
+    ctx.throw(Status.BadRequest, `[recognizeLocation] invalid "image" - must be base64`);
+  }
 
   const completion = await ai.createCompletion([
     {
