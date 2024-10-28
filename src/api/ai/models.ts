@@ -9,6 +9,12 @@ export interface GetRecommendationsReq extends BaseReq {
 
 export interface GetCompareRecommendationsReq extends BaseReq {}
 
+export interface GetItineraryReq extends BaseReq {
+  choice: string;
+}
+
+export interface GetItineraryBudgetReq extends BaseReq {}
+
 export interface GetLocationRecognitionReq {
   image: string; // base64
 }
