@@ -1,5 +1,6 @@
 import type { RouterContext } from '@oak/oak/router';
 import type { BaseReq } from '@api/model.ts';
+import { ServerSentEvent } from '@oak/commons/server_sent_event';
 
 // openai::AssistantStream
 interface Chat {
@@ -9,6 +10,8 @@ interface Chat {
 function wrapValue(str: string): string {
   return str.replaceAll(' ', '&nbsp;');
 }
+
+const TERMINATION_STR = '≈ç√∫˜µ¬˚∆˙©ƒ∂ßå';
 
 export async function processChatResponse(
   ctx: RouterContext<string>,
@@ -20,7 +23,10 @@ export async function processChatResponse(
 
     await chat
       .on('textDelta', ({ value }) => sseTarget.dispatchMessage(wrapValue(value)))
-      .on('textDone', () => sseTarget.close());
+      .on('textDone', async () => {
+        sseTarget.dispatchMessage(TERMINATION_STR);
+        await sseTarget.close();
+      });
   } else {
     const stream = new TextEncoderStream();
     const writer = stream.writable.getWriter();
