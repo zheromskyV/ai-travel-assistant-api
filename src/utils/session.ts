@@ -17,7 +17,11 @@ interface Session extends Partial<Record<SessionKey, string>> {
 export async function createSession(ctx: Context): Promise<Session> {
   const sid = randomUUID();
   ctx.state[SID] = sid;
-  await ctx.cookies.set(SID, sid);
+  await ctx.cookies.set(SID, sid, {
+    sameSite: 'none',
+    httpOnly: true,
+    secure: false,
+  });
 
   const session = { id: sid };
   await setSidKV(session);
