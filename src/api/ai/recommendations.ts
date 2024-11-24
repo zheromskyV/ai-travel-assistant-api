@@ -11,7 +11,10 @@ export async function getRecommendations(ctx: RouterContext<string>): Promise<vo
   const { questionnaire } = req;
 
   if (!questionnaire) {
-    ctx.throw(Status.BadRequest, `[getRecommendations] "questionnaire" is required but not provided`);
+    ctx.throw(
+      Status.BadRequest,
+      `[getRecommendations] "questionnaire" is required but not provided`,
+    );
   }
 
   const { id } = await ai.createThread();

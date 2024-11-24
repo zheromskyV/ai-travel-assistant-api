@@ -6,6 +6,10 @@ interface Chat {
   on(e: string, fn: (p: { value: string }) => void): Chat;
 }
 
+function wrapValue(str: string): string {
+  return str.replaceAll(' ', '&nbsp;');
+}
+
 export async function processChatResponse(
   ctx: RouterContext<string>,
   { streamResponse }: BaseReq,
@@ -15,7 +19,7 @@ export async function processChatResponse(
     const sseTarget = await ctx.sendEvents();
 
     await chat
-      .on('textDelta', ({ value }) => sseTarget.dispatchMessage(value))
+      .on('textDelta', ({ value }) => sseTarget.dispatchMessage(wrapValue(value)))
       .on('textDone', () => sseTarget.close());
   } else {
     const stream = new TextEncoderStream();
