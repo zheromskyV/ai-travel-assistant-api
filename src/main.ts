@@ -11,7 +11,7 @@ if (import.meta.main) {
   router.use('/api', apiRouter.routes());
 
   app.use(errorHandler);
-  app.use(oakCors());
+  app.use(oakCors({ origin: 'http://localhost:8081', credentials: true }));
   app.use(router.routes());
   app.use(router.allowedMethods());
 
