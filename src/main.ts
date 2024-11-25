@@ -5,13 +5,13 @@ import { apiRouter } from '@api/api-router.ts';
 import { errorHandler } from '@api/middleware/errors.ts';
 
 if (import.meta.main) {
-  const app = new Application();
+  const app = new Application({ proxy: true });
 
   const router = new Router();
   router.use('/api', apiRouter.routes());
 
   app.use(errorHandler);
-  app.use(oakCors({ origin: 'http://localhost:8081', credentials: true }));
+  app.use(oakCors({ origin: true, credentials: true }));
   app.use(router.routes());
   app.use(router.allowedMethods());
 
