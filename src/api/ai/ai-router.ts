@@ -1,5 +1,6 @@
 import { Router } from '@oak/oak/router';
 import { getRecommendations } from './recommendations.ts';
+import { recognizeLocationOld } from './location-recognition-old.ts';
 import { recognizeLocation } from './location-recognition.ts';
 import { compareRecommendations } from './compare-recommendations.ts';
 import { getItinerary } from './itinerary.ts';
@@ -14,3 +15,4 @@ aiRouter.post('/itinerary', getItinerary);
 aiRouter.post('/itinerary/budget', getItineraryBudget);
 
 aiRouter.post('/location-recognition', recognizeLocation);
+aiRouter.post('/location-recognition-old', recognizeLocationOld);

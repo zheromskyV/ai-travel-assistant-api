@@ -1,19 +1,20 @@
 import type { RouterContext } from '@oak/oak/router';
+import type { GetLocationRecognitionReq } from './models.ts';
+import { getReqBody } from '@utils/api.ts';
 import { ai } from './ai.ts';
 import { Status } from '@oak/commons/status';
-import { encodeBase64 } from 'https://deno.land/std/encoding/base64.ts';
 
-export async function recognizeLocation(ctx: RouterContext<string>): Promise<void> {
-  const req = await ctx.request.body.formData();
-  const image = req.get('image') as File;
+export async function recognizeLocationOld(ctx: RouterContext<string>): Promise<void> {
+  const req = await getReqBody<GetLocationRecognitionReq>(ctx);
+  const { image } = req;
 
   if (!image) {
     ctx.throw(Status.BadRequest, `[recognizeLocation] "image" is required but not provided`);
   }
 
-  const base64 = encodeBase64(await image.arrayBuffer());
-
-  console.log(base64.slice(0, 100));
+  if (!image.startsWith('data:image/') || !image.includes('base64')) {
+    ctx.throw(Status.BadRequest, `[recognizeLocation] invalid "image" - must be base64`);
+  }
 
   const completion = await ai.createCompletion([
     {
@@ -28,7 +29,7 @@ export async function recognizeLocation(ctx: RouterContext<string>): Promise<voi
       content: [{
         type: 'image_url',
         image_url: {
-          url: `data:image/jpeg;base64,${base64}`,
+          url: req.image,
           // deno-lint-ignore no-explicit-any
           detail: Deno.env.get('LOCATION_RECOGNITION_IMAGE_DETAIL') as any || 'low',
         },
