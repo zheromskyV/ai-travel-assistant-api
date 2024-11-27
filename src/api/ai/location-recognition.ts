@@ -13,8 +13,6 @@ export async function recognizeLocation(ctx: RouterContext<string>): Promise<voi
 
   const base64 = encodeBase64(await image.arrayBuffer());
 
-  console.log(base64.slice(0, 100));
-
   const completion = await ai.createCompletion([
     {
       role: 'system',
